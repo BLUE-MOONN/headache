@@ -1,219 +1,182 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Funny Yes/No Page</title>
-  <style>
-    body {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Funny Ele Quiz 🎉</title>
+<style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    text-align: center;
+    transition: background 1s ease;
+  }
 
-    .container {
-      text-align: center;
-    }
+  h1 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 30px;
+  }
 
-    h1 {
-      margin-bottom: 30px;
-      color: #333;
-    }
+  .btn {
+    background-color: #ff6584;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    margin: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: transform 0.3s, background 0.3s;
+  }
 
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      margin: 20px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-    }
+  .btn:hover {
+    background-color: #ff416c;
+    transform: scale(1.05);
+  }
 
-    #yesBtn {
-      background: #4caf50;
-      color: white;
-    }
+  .question {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
 
-    #noBtn {
-      background: #f44336;
-      color: white;
-      position: absolute;
-    }
-  </style>
+  .show {
+    display: flex;
+  }
+
+  /* Celebration */
+  #celebration {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 10;
+    overflow: hidden;
+  }
+
+  #celebration h2 {
+    font-size: 2.5rem;
+    color: #ff4d79;
+    animation: bounce 1s infinite alternate;
+  }
+
+  @keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-15px); }
+  }
+
+  .emoji {
+    position: absolute;
+    font-size: 2rem;
+    animation: float 3s linear forwards;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+    50% { transform: translateY(-30vh) rotate(180deg); opacity: 1; }
+    100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* Final Image Fade-in & Zoom */
+  #finalImage {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 60vw;
+    max-width: 800px;
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity 2s ease, transform 2s ease;
+    display: none;
+    z-index: 5;
+  }
+</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Do you like me? ❤️</h1>
-    <button id="yesBtn">Yes</button>
-    <button id="noBtn">No</button>
-  </div>
 
-  <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
+<div id="q1" class="question show">
+  <h1>Chnouwa mochkel Elee ? 😟</h1>
+  <button class="btn" onclick="nextQuestion(2)">Rassi youjaaa 😩</button>
+</div>
 
-    // Move the "No" button when hovered
-    noBtn.addEventListener("mouseenter", () => {
-      const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-      const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-    });
+<div id="q2" class="question">
+  <h1> Ylzmeek tochreeb mee 😏</h1>
+  <button class="btn" onclick="nextQuestion(3)">Behy haw chnochreeb 😋</button>
+  <button id="runBtn" class="btn" onmouseover="runAway('runBtn')">Le le netswarch ml mee 😭</button>
+</div>
 
-    yesBtn.addEventListener("click", () => {
-      alert("Yay! I like you too 😍");
-    });
-  </script>
+<div id="q3" class="question">
+  <h1>Tochreeb mee w trataah 3iniik ml ecran yna9soulkk mn wjieet raseek nchalh 😤</h1>
+  <button class="btn" onclick="celebrate()">OKAY 😎</button>
+  <button id="runBtn2" class="btn" onmouseover="runAway('runBtn2')">Najamch nerteeh andiich waqt 😭</button>
+</div>
+
+<div id="celebration">
+  <h2>SAHYYYYYT ELE ELE ELEEE 💥😂 Rteeh chwayaa 🤏</h2>
+</div>
+
+<img id="finalImage" src="d.jpg" alt="celebration">
+
+<script>
+  function nextQuestion(num) {
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('show'));
+    document.getElementById('q' + num).classList.add('show');
+  }
+
+  // Single runaway function for any button
+  function runAway(btnId) {
+    const btn = document.getElementById(btnId);
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 100);
+    btn.style.position = 'absolute';
+    btn.style.left = x + 'px';
+    btn.style.top = y + 'px';
+  }
+
+  function celebrate() {
+    document.querySelectorAll('.question').forEach(q => q.classList.remove('show'));
+    const c = document.getElementById('celebration');
+    c.style.display = 'flex';
+
+    // Flying emojis 🎊
+    const emojis = ["😂", "🎉", "💖", "🔥", "💃", "✨", "🤣"];
+    for (let i = 0; i < 25; i++) {
+      const e = document.createElement('div');
+      e.classList.add('emoji');
+      e.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      e.style.left = Math.random() * window.innerWidth + 'px';
+      e.style.animationDelay = (Math.random() * 2) + 's';
+      e.style.fontSize = (Math.random() * 2 + 1) + 'rem';
+      document.body.appendChild(e);
+      setTimeout(() => e.remove(), 3000);
+    }
+
+    // After celebration → show image with fade-in & zoom
+    setTimeout(() => {
+      c.style.display = 'none';
+      const img = document.getElementById('finalImage');
+      img.style.display = 'block';
+      setTimeout(() => img.style.opacity = '1', 100);
+      setTimeout(() => img.style.transform = 'translate(-50%, -50%) scale(1)', 100);
+    }, 3000);
+  }
+</script>
+
 </body>
 </html>
- -->
- <!DOCTYPE html>
- <html lang="en">
- <head>
-   <meta charset="UTF-8">
-   <title>Funny Yes/No Page</title>
-   <style>
-     body {
-       display: flex;
-       justify-content: center;
-       align-items: center;
-       height: 100vh;
-       font-family: Arial, sans-serif;
-       background: linear-gradient(135deg, #f9d423, #ff4e50);
-       overflow: hidden;
-     }
- 
-     .container {
-       text-align: center;
-     }
- 
-     h1 {
-       margin-bottom: 30px;
-       color: #222;
-       font-size: 2.5rem;
-     }
- 
-     button {
-       padding: 15px 30px;
-       font-size: 18px;
-       margin: 20px;
-       border: none;
-       border-radius: 8px;
-       cursor: pointer;
-       transition: all 0.2s ease;
-       position: absolute;
-     }
- 
-     #yesBtn {
-       background: #4caf50;
-       color: white;
-       position: static;
-     }
- 
-     #noBtn {
-       background: #f44336;
-       color: white;
-     }
- 
-     /* Celebration overlay */
-     .celebration {
-       position: fixed;
-       top: 0;
-       left: 0;
-       width: 100%;
-       height: 100%;
-       background: rgba(0,0,0,0.7);
-       display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-       font-size: 3rem;
-       color: white;
-       z-index: 999;
-       animation: fadeOut 4s forwards;
-     }
- 
-     .celebration h2 {
-       animation: pulse 1s infinite;
-       text-shadow: 0 0 10px #ff4e50, 0 0 20px #f9d423;
-     }
- 
-     @keyframes pulse {
-       0% { transform: scale(1); }
-       50% { transform: scale(1.2); }
-       100% { transform: scale(1); }
-     }
- 
-     @keyframes fadeOut {
-       0% { opacity: 1; }
-       85% { opacity: 1; }
-       100% { opacity: 0; visibility: hidden; }
-     }
- 
-     /* Confetti animation */
-     .confetti {
-       position: fixed;
-       font-size: 24px;
-       animation: fall linear forwards;
-     }
- 
-     @keyframes fall {
-       0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
-       100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-     }
-   </style>
- </head>
- <body>
-   <div class="container">
-     <h1>Do you like me? ❤️</h1>
-     <button id="yesBtn">Yes</button>
-     <button id="noBtn">No</button>
-   </div>
- 
-   <script>
-     const noBtn = document.getElementById("noBtn");
-     const yesBtn = document.getElementById("yesBtn");
- 
-     // "No" runs away
-     document.addEventListener("mousemove", (e) => {
-       const rect = noBtn.getBoundingClientRect();
-       const mouseX = e.clientX;
-       const mouseY = e.clientY;
-       const distanceX = Math.abs(mouseX - (rect.left + rect.width / 2));
-       const distanceY = Math.abs(mouseY - (rect.top + rect.height / 2));
- 
-       if (distanceX < 80 && distanceY < 50) {
-         const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-         const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-         noBtn.style.left = `${x}px`;
-         noBtn.style.top = `${y}px`;
-       }
-     });
- 
-     // Celebration
-     yesBtn.addEventListener("click", () => {
-       const celebration = document.createElement("div");
-       celebration.classList.add("celebration");
-       celebration.innerHTML = `<h2>🎉 YAY! I like you too 😍🎉</h2>`;
-       document.body.appendChild(celebration);
- 
-       // Confetti burst 🎊
-       for (let i = 0; i < 80; i++) {
-         const confetti = document.createElement("div");
-         confetti.classList.add("confetti");
-         confetti.textContent = ["🎊","✨","💖","🎉","🌟"][Math.floor(Math.random()*5)];
-         confetti.style.left = Math.random() * window.innerWidth + "px";
-         confetti.style.animationDuration = (2 + Math.random() * 3) + "s";
-         document.body.appendChild(confetti);
-         setTimeout(() => confetti.remove(), 5000);
-       }
- 
-       setTimeout(() => celebration.remove(), 4000);
-     });
-   </script>
- </body>
- </html>
- 
